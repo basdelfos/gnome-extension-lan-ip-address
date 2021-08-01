@@ -1,11 +1,11 @@
 {
-  "description": "Show LAN IP address on GNOME panel. Do not show loopback addresses (127.0.0.0/8) or Docker networks.", 
+  "description": "Show IP address on GNOME panel. Do not show loopback addresses (127.0.0.0/8) or Docker networks.", 
   "name": "LAN IP Address", 
   "shell-version": [
     "3.38",
     "40"
   ], 
-  "url": "https://github.com/Josholith/gnome-extension-lan-ip-address", 
-  "uuid": "lan-ip-address@mrhuber.com", 
+  "url": "https://github.com/basdelfos/gnome-extension-lan-ip-address", 
+  "uuid": "lan-ip-address@basdelfos.nl", 
   "version": 7
 }
