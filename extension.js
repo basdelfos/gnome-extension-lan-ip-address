@@ -8,6 +8,7 @@ const PanelMenu = imports.ui.panelMenu;
 const Clutter = imports.gi.Clutter;
 const GLib = imports.gi.GLib;
 const ShellToolkit = imports.gi.St;
+const GObject = imports.gi.GObject;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Extension = ExtensionUtils.getCurrentExtension();
@@ -67,12 +68,10 @@ function _get_dev_ip(device) {
     return ipAddress; 
 }
 
-const LanIpAddressIndicator = new Lang.Class({
-    Name: 'LanIpAddress.indicator',
-    Extends: PanelMenu.Button,
+const LanIpAddressIndicator = GObject.registerClass(class LanIpAddressIndicator extends PanelMenu.Button {
 
-    _init: function () {
-        this.parent(0.0, "LAN IP Address Indicator", false);
+    _init() {
+        super._init(0.0, "LAN IP Address Indicator", false);
 
         this.boxLayout = new St.BoxLayout();
         this.iconVpn = new St.Icon({
@@ -89,9 +88,9 @@ const LanIpAddressIndicator = new Lang.Class({
         this.add_child(this.boxLayout)
 
         this._updateLabel();
-    },
+    }
 
-    _updateLabel : function(){
+    _updateLabel() {
         const refreshTime = 5 // in seconds
 
         if (this._timeout) {
@@ -103,22 +102,23 @@ const LanIpAddressIndicator = new Lang.Class({
         // this.buttonText.set_text(_get_lan_ip());
         var ipAddress = _get_dev_ip('tun0');
         if (ipAddress == '') {
-            this.boxLayout.visible = false;
+            this.boxLayout.visible = true;
+            this.buttonText.set_text('----');
         }
         else {
             this.boxLayout.visible = true;
             this.buttonText.set_text(ipAddress);
         }
         
-    },
+    }
 
-    _removeTimeout: function () {
+    _removeTimeout() {
         if (this._timeout) {
             this._timeout = null;
         }
-    },
+    }
 
-    stop: function () {
+    stop() {
         if (this._timeout) {
             Mainloop.source_remove(this._timeout);
         }
